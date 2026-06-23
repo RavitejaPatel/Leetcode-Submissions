@@ -1,0 +1,51 @@
+/*
+Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution 
+{
+    public Node cloneGraph(Node node) 
+	{
+		if(node == null)
+			return null;
+
+		//original->clone
+		Map<Node,Node> visited = new HashMap<>();
+        return dfs(node,visited);
+    }
+
+	private Node dfs(Node node, Map<Node,Node> visited)
+	{
+
+		if(visited.containsKey(node))
+			return visited.get(node);
+
+		Node clone = new Node(node.val);
+		
+		visited.put(node, clone);//2 2clone
+
+		for(Node neighbour : node.neighbors)
+		{
+			Node cloneNeighbour = dfs(neighbour, visited);
+			clone.neighbors.add(cloneNeighbour);
+		}
+		return clone;
+	}
+
+}

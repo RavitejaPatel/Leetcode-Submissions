@@ -9,51 +9,54 @@
  * }
  */
 
-
-public class Solution {
-    public void reorderList(ListNode head) {
+class Solution {
+  public void reorderList(ListNode head) 
+    {
         if (head == null || head.next == null) return;
 
-        int len = getLength(head);
-        int mid = (len - 1) / 2;         // end index of the first half
-
-        // advance to node at 'mid'
-        ListNode firstEnd = head;
-        for (int i = 0; i < mid; i++) firstEnd = firstEnd.next;
-
-        // reverse the second half (start at firstEnd.next)
-        ListNode second = reverse(firstEnd.next);
-        firstEnd.next = null;            // split
-
-        // weave first half [head..firstEnd] with reversed second half
-        ListNode first = head;
-        while (second != null) {
-            ListNode t1 = first.next;
-            ListNode t2 = second.next;
-
-            first.next = second;
-            second.next = t1;
-
-            first = t1;
-            second = t2;
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast!=null && fast.next!=null)
+        {
+            fast = fast.next.next;
+            slow = slow.next;
         }
+        // slow 6 8 10
+
+        //
+        ListNode secondHalf = reverse(slow.next);//8 6
+        slow.next = null;// 2 4 null
+
+        ListNode firstHalf = head;// 2 4 6 8
+
+        while(secondHalf!=null)
+        {
+            ListNode temp1 = firstHalf.next; //4 6 8
+            ListNode temp2 = secondHalf.next; //6
+            
+            firstHalf.next = secondHalf;//2 8 6
+            secondHalf.next = temp1;//8->temp1
+
+            firstHalf = temp1;
+            secondHalf = temp2;
+        }
+
     }
 
-    private int getLength(ListNode head) {
-        int n = 0;
-        for (ListNode p = head; p != null; p = p.next) n++;
-        return n;
-    }
+    private ListNode reverse(ListNode node)
+    {
+       ListNode prev = null;
+       ListNode next = null;
+       ListNode curr = node;
 
-    private ListNode reverse(ListNode node) {
-        ListNode prev = null, curr = node;
-        while (curr != null) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
+       while(curr!=null)// 1 2 3 4
+       {
+        next = curr.next;//nx=2 3 4
+        curr.next = prev;//1 null
+        prev = curr;
+        curr = next;
+       } 
+       return prev;
     }
 }
-

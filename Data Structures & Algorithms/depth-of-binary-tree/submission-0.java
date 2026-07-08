@@ -18,24 +18,14 @@ class Solution
 {
     public int maxDepth(TreeNode root) 
     {
-        if(root == null)
-            return 0;
-        return getMaxDepth(root);
+        return getMaxDepth(root);   
     }
-    private int getMaxDepth(TreeNode root)
+    private int getMaxDepth(TreeNode node)
     {
-        if(root == null)
+        if(node == null)
             return 0;
-        
-        return calcMxDepth(
-                getMaxDepth(root.left),
-                getMaxDepth(root.right)
-            )+1;
-
+            
+        return Math.max(getMaxDepth(node.left),getMaxDepth(node.right))+1;
     }
 
-    private int calcMxDepth(int a,int b)
-    {
-        return Math.max(a,b);
-    }
 }

@@ -9,46 +9,49 @@
  * }
  */
 
-class Solution {
- public ListNode mergeTwoLists(ListNode list1, ListNode list2) 
-	 {
-		 ListNode result = new ListNode();
-		 ListNode temp = null;
-		 ListNode head = result;
-	       while(list1 != null && list2 != null)
-	       {
-	    	   if(list1.val < list2.val)
-	    	   {
-	    		   temp = new ListNode(list1.val, null);
-//	    		   result.next = temp;
-//	    		   result = result.next;
-	    		   //result.next = (result == null) ? new ListNode(list1.val, null) : ;
-	    		   list1 = list1.next;
-	    	   }
-	    	   else
-	    	   {
-	    		   temp = new ListNode(list2.val, null);//1
-	    		   list2 = list2.next;
-	    	   }
-	    	   result.next = temp;//1 1 2 3 4 null
-    		   result = result.next;
-	       }
-	       
-	       while(list1!=null)
-	       {
-	    	   result.next = new ListNode(list1.val, null);
-	    	   result = result.next;
-	    	   list1 = list1.next;
-	       }
-	       
-	       while(list2!=null)
-	       {
-	    	   result.next = new ListNode(list2.val, null);
-	    	   result = result.next;
-	    	   list2 = list2.next;
-	       }
-	       
-	       return head.next;
-	 }
-	
+class Solution 
+{
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) 
+    {
+        ListNode ptr1 = list1;
+        ListNode ptr2 = list2;
+        ListNode head = null;
+        head = new ListNode(-1);
+        ListNode res = head;
+        ListNode curr = null;
+        while(ptr1!=null && ptr2!=null)
+        {
+            if(ptr1.val<ptr2.val)
+            {
+                curr = new ListNode(ptr1.val);
+                ptr1 = ptr1.next;
+            }
+            else
+            {
+               curr = new ListNode(ptr2.val);
+               ptr2 = ptr2.next;
+            }
+
+            res.next = curr;
+            res = res.next;
+        }  
+        while(ptr1!=null)
+        {
+            curr = new ListNode(ptr1.val);
+            ptr1 = ptr1.next;
+
+            res.next = curr;
+            res = res.next;
+        } 
+        while(ptr2!=null)
+        {
+            curr = new ListNode(ptr2.val);
+            ptr2 = ptr2.next;
+
+            res.next = curr;
+            res = res.next;
+        } 
+
+        return head.next;
+    }
 }

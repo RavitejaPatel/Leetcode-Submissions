@@ -1,37 +1,36 @@
-class KthLargest 
-{
-    PriorityQueue<Integer> minHeap = null;
+class KthLargest {
+
     int k;
     int[] nums;
-    public KthLargest(int k, int[] nums) 
-    {
-        this.k = k;
-        this.nums = nums;
-        minHeap = new PriorityQueue<>();
-        initHeap();
+    PriorityQueue<Integer> pq = null;
+
+    public KthLargest(int k, int[] nums) {
+        this.k=k;
+        this.nums=nums;
+        pq = new PriorityQueue<>(
+        );
+        initAdd();
     }
 
-    private void initHeap()
+    private void initAdd()
     {
         for(int n : nums)
-            add(n);
-        
+        {
+            pq.add(n);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+        System.out.print(pq);
     }
-	    
     
-    public int add(int val) 
-    {
-        if(minHeap.size()<k)
-        {
-            minHeap.add(val);
-            return minHeap.size() == k ? minHeap.peek() : -1;
+    public int add(int val) {
+       
+       pq.add(val);
+        if (pq.size() > k) {
+            pq.poll();
         }
-
-        if(val > minHeap.peek())
-        {
-            minHeap.poll();
-            minHeap.add(val);
-        }
-        return minHeap.peek();
+        // The root of the min-heap is always the k-th largest element
+        return pq.peek();
     }
 }
